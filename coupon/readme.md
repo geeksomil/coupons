@@ -80,6 +80,7 @@ This is the main server file that starts the application and sets up the routes.
 
 - **username**: String
 - **password**: String
+- **coupons**: Array
 
 #### Coupon Schema
 
