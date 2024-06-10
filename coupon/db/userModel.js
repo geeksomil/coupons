@@ -8,7 +8,6 @@ const userSchema={
 
     password:{
         type:String,
-        unique:true
     },
     coupons:Array
 }
