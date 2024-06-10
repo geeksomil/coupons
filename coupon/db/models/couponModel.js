@@ -29,6 +29,7 @@ module.exports=couponModel
 /*
 {
     "name":"OFF40",
+    "isLimit":true
     "limit":3,
     "discount":30,
     "discountType":"percentage"

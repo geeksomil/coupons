@@ -1,9 +1,11 @@
 const { default: mongoose } = require("mongoose")
-const userModel = require("../db/userModel")
-const couponModel = require("../db/couponModel")
+const userModel = require("../db/models/userModel")
+const couponModel = require("../db/models/couponModel")
+const jwt=require("jsonwebtoken")
 module.exports = async function applyCoupon(req, res) {
     try {
-        let userPromise = userModel.findOne({ "username": req.body.username });
+        const payload=req.body.payload;
+        let userPromise = userModel.findOne({ "username": payload.username });
         let couponPromise = couponModel.findOne({ "name": req.body.coupon });
         let user, coupon;
         await Promise.all([userPromise, couponPromise]).then((response) => {
@@ -24,7 +26,7 @@ module.exports = async function applyCoupon(req, res) {
             return res.send({success:false,msg:"coupon maximum limit reached",price:req.price});
         }
         }
-        let msg = await userModel.updateOne({ "username": req.body.username }, { $push: { "coupons": req.body.coupon } })
+        let msg = await userModel.updateOne({ "username": payload.username }, { $push: { "coupons": req.body.coupon } })
         let price=req.body.price;
         if(coupon.discountType=='percentage'){
             price=price*(100-coupon.discount)/100;

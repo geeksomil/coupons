@@ -9,7 +9,11 @@ const userSchema={
     password:{
         type:String,
     },
-    coupons:Array
+    coupons:Array,
+    isAdmin:{
+        type:Boolean,
+        required:true
+    }
 }
 const userModel=new mongoose.model("users",userSchema);
 module.exports=userModel
