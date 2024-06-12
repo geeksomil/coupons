@@ -10,7 +10,8 @@ const connectionMiddleware=async (req, res, next) => {
         next();
     }
     catch {
-           console.log("not connected ")
+           console.log("not connected ");
+           return {success:false,msg:"not able to connect to database"}
     }
 }
 module.exports=connectionMiddleware
