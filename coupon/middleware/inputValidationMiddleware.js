@@ -1,5 +1,5 @@
 const zod=require("zod");
-const schema=zod.object({
+const schema1=zod.object({
     token:zod.string(),
     coupon: zod.object({
         name:zod.string().max(30),
@@ -10,14 +10,33 @@ const schema=zod.object({
         limitExist:zod.boolean()
     })
 })
-const inputValidationMiddleware=(req,res,next)=>{
-    const response=schema.safeParse(req.body);
+const generateCoupon=(req,res,next)=>{
+    const response=schema1.safeParse(req.body);
     if(response.success){
         next();
     }
     else{
         let arr=response['error']['issues'][0]['path'];
-        res.send({success:"false",msg:arr[arr.length-1]+" contains invalid type"})
+        res.send({success:"false",msg:arr[arr.length-1]+" contains invalid value"})
     }
 }
-module.exports=inputValidationMiddleware
+const schema2=zod.object(
+    {
+        token:zod.string(),
+        coupon:zod.string().max(30),
+        price:zod.coerce.number()
+    }
+)
+const applyCoupon=(req,res,next)=>{
+    const response=schema2.safeParse(req.body);
+    if(response.success){
+        next();
+    }
+    else{
+        let arr=response['error']['issues'][0]['path'];
+        res.send({success:"false",msg:arr[arr.length-1]+" contains invalid value"})
+    }
+}
+module.exports={
+    generateCoupon,applyCoupon
+}

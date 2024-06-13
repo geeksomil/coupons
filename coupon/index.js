@@ -14,8 +14,8 @@ router.use(express.json());
 router.use(connectionMiddleware)
 //routes
 router.post("/addUser",addUser);
-router.post('/generateCoupon', inputValidationMiddleware ,authMiddleware,generateCoupon);
-router.post("/applyCoupon",authMiddleware,applyCoupon);
+router.post('/generateCoupon', inputValidationMiddleware.generateCoupon ,authMiddleware,generateCoupon);
+router.post("/applyCoupon",inputValidationMiddleware.applyCoupon,authMiddleware,applyCoupon);
 // app.use((err,req,res,next)=>{
 //     console.log("ERROR OCCURED");// global catch. it will only be called if error occurs
 // })
